@@ -1,6 +1,7 @@
 package com.tirkisovkadyr.todolistv4;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -56,6 +57,12 @@ public class WorkWithTodoHelper {
      * @return - <code>constraintLayout</code> with given arguments
      */
     public static ConstraintLayout getTodoRepresentation(Context context, Todo todo) {
+        // TODO: 25.01.2023 make todo representations clickable
+        // TODO: 25.01.2023 if theme longer than 31characters show shortened version
+        // TODO: 25.01.2023 if descr longer than \d+characters show shortened version
+        // TODO: 25.01.2023 make button "create task" always on display in app
+        // TODO: 25.01.2023 make button "create task" disappear if scroll on very bottom // setVisibility()
+
         String theme = todo.getTheme();
         String descr = todo.getDescription();
         boolean isDone = todo.getIsDone();
@@ -80,8 +87,13 @@ public class WorkWithTodoHelper {
         todoRepr.addView(txtDescription);
 
         todoRepr.setBackgroundResource(R.drawable.layout_border);
-
-        // TODO add checkbox isDone for every todo representation
+        todoRepr.setOnClickListener((view) -> {
+            int id = todo.getId();
+            Intent intent = new Intent(context, MakeOrChangeTodoActivity.class);
+            intent.putExtra("id", id);
+            context.startActivity(intent);
+        });
+        // TODO add checkbox isDone for every todo representation // done
 
         return todoRepr;
     }
@@ -119,6 +131,12 @@ public class WorkWithTodoHelper {
         todoRepr.addView(txtDescription);
 
         todoRepr.setBackgroundResource(R.drawable.layout_border);
+        todoRepr.setOnClickListener((view) -> {
+            int id = todo.getId();
+            Intent intent = new Intent(context, MakeOrChangeTodoActivity.class);
+            intent.putExtra("id", id);
+            context.startActivity(intent);
+        });
 
         return todoRepr;
     }
@@ -140,6 +158,10 @@ public class WorkWithTodoHelper {
         Collections.sort(ids);
 
         return ids.get(ids.size()-1) + 1;
+    }
+
+    public static void onClickChangeTodo(View view) {
+
     }
 
     /**

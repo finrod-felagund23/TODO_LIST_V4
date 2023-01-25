@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MakeNewTodoActivity"
+    tools:context=".MakeOrChangeTodoActivity"
     android:id="@+id/main_layout">
 
 
@@ -20,7 +20,9 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText"
+        android:importantForAutofill="no" />
 
 
     <EditText
@@ -36,7 +38,9 @@
         android:lines="6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/theme_edt" />
+        app:layout_constraintTop_toBottomOf="@+id/theme_edt"
+        android:importantForAutofill="no"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/del_btn"
@@ -50,7 +54,8 @@
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UsingOnClickInXml" />
 
     <Button
         android:id="@+id/add_btn"
@@ -64,5 +69,6 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UsingOnClickInXml" />
 </androidx.constraintlayout.widget.ConstraintLayout>
