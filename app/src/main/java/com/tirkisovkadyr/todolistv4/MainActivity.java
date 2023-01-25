@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 add(new Todo(2, "Take medicine", "Use 2 pills of anti-drag medicine", false));
             }
         };
-//        JsonHelper.exportToJson(this, todos0);
+        JsonHelper.exportToJson(this, todos0);
 
         ConstraintLayout mainLayout = findViewById(R.id.main_constraint_layout);
         mainLayout.setBackgroundResource(R.drawable.layout_border);
@@ -53,15 +53,13 @@ public class MainActivity extends AppCompatActivity {
                 todoRepr = WorkWithTodoHelper.getTodoRepresentation
                         (
                                 this,
-                                todo.getTheme(),
-                                todo.getDescription()
+                                todo
                         );
             } else {
                 todoRepr = WorkWithTodoHelper.getTodoRepresentation
                         (
                                 this,
-                                todo.getTheme(),
-                                todo.getDescription(),
+                                todo,
                                 idOfTopView
                         );
             }

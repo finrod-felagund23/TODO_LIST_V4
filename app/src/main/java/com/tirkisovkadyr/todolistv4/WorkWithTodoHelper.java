@@ -3,6 +3,7 @@ package com.tirkisovkadyr.todolistv4;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,10 +19,13 @@ import java.util.List;
  */
 public class WorkWithTodoHelper {
     private static final ConstraintLayout.LayoutParams layoutParamsForThemeTxt = new ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_CONSTRAINT, ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
     );
     private static final ConstraintLayout.LayoutParams layoutParamsForDescriptionTxt = new ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_CONSTRAINT, ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
+    );
+    private static final ConstraintLayout.LayoutParams layoutParamsForIsDoneCheckbox = new ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
     );
 
 //    private static ConstraintLayout.LayoutParams l = new ConstraintLayout.LayoutParams(width, height)
@@ -35,40 +39,43 @@ public class WorkWithTodoHelper {
         layoutParamsForThemeTxt.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForThemeTxt.setMargins(0, 5, 0, 0);
 
-
         layoutParamsForDescriptionTxt.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForDescriptionTxt.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForDescriptionTxt.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForDescriptionTxt.setMargins(0, 0, 0, 5);
+
+        layoutParamsForIsDoneCheckbox.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParamsForIsDoneCheckbox.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParamsForIsDoneCheckbox.setMargins(20, 20, 20,0);
     }
 
     /**
      * Returns new todo representation with given arguments
      * @param context - just <code>this</code>
-     * @param theme - theme for make todo repr
-     * @param descr - description for make todo repr
+     * @param todo todo from json
      * @return - <code>constraintLayout</code> with given arguments
      */
-    public static ConstraintLayout getTodoRepresentation(Context context, String theme, String descr) {
+    public static ConstraintLayout getTodoRepresentation(Context context, Todo todo) {
+        String theme = todo.getTheme();
+        String descr = todo.getDescription();
+        boolean isDone = todo.getIsDone();
+
         ConstraintLayout todoRepr = new ConstraintLayout(context);
         todoRepr.setLayoutParams(makeLayoutParamsForTodoRepr()); // own func
         todoRepr.setId(View.generateViewId());
 
-        TextView txtTheme = new TextView(context);
-        txtTheme.setId(View.generateViewId());
-        txtTheme.setLayoutParams(layoutParamsForThemeTxt);
-        txtTheme.setId(View.generateViewId());
-        txtTheme.setText(theme);
-        txtTheme.setTextSize(20);
+        CheckBox chkBox = generateChkIsDone(context, isDone);
 
-        layoutParamsForDescriptionTxt.topToBottom = txtTheme.getId();
+        layoutParamsForThemeTxt.startToEnd = chkBox.getId(); // for place theme on right side of checkBox
 
-        TextView txtDescription = new TextView(context);
-        txtDescription.setId(View.generateViewId());
-        txtDescription.setLayoutParams(layoutParamsForDescriptionTxt);
-        txtDescription.setId(View.generateViewId());
-        txtDescription.setText(descr);
+        TextView txtTheme = generateTxtTheme(context, theme);
 
+        layoutParamsForDescriptionTxt.startToEnd = chkBox.getId(); // for place descr on right side of checkBox
+        layoutParamsForDescriptionTxt.topToBottom = txtTheme.getId(); // for place descr under theme
+
+        TextView txtDescription = generateTxtDescr(context, descr);
+
+        todoRepr.addView(chkBox);
         todoRepr.addView(txtTheme);
         todoRepr.addView(txtDescription);
 
@@ -83,36 +90,56 @@ public class WorkWithTodoHelper {
      * If that todo repr
      * is not first, we need place him below prev
      * @param context - just <code>this</code> for mobile activity
-     * @param theme - theme of todo
-     * @param descr - description of todo
+     * @param todo todo from json
      * @param idOfTopView - id of above todo repr
      * @return - - <code>constraintLayout</code> with given arguments
      */
-    public static ConstraintLayout getTodoRepresentation(Context context, String theme, String descr, int idOfTopView) {
+    public static ConstraintLayout getTodoRepresentation(Context context, Todo todo, int idOfTopView) {
+        String theme = todo.getTheme();
+        String descr = todo.getDescription();
+        boolean isDone = todo.getIsDone();
+
         ConstraintLayout todoRepr = new ConstraintLayout(context);
         todoRepr.setLayoutParams(makeLayoutParamsForTodoRepr(idOfTopView)); // own func
         todoRepr.setId(View.generateViewId());
 
+        CheckBox chkBox = generateChkIsDone(context, isDone);
 
-        TextView txtTheme = new TextView(context);
-        txtTheme.setLayoutParams(layoutParamsForThemeTxt);
-        txtTheme.setId(View.generateViewId());
-        txtTheme.setText(theme);
-        txtTheme.setTextSize(20);
+        layoutParamsForThemeTxt.startToEnd = chkBox.getId();
 
+        TextView txtTheme = generateTxtTheme(context, theme);
+
+        layoutParamsForDescriptionTxt.startToEnd = chkBox.getId();
         layoutParamsForDescriptionTxt.topToBottom = txtTheme.getId();
 
-        TextView txtDescription = new TextView(context);
-        txtDescription.setLayoutParams(layoutParamsForDescriptionTxt);
-        txtDescription.setId(View.generateViewId());
-        txtDescription.setText(descr);
+        TextView txtDescription = generateTxtDescr(context, descr);
 
+        todoRepr.addView(chkBox);
         todoRepr.addView(txtTheme);
         todoRepr.addView(txtDescription);
 
         todoRepr.setBackgroundResource(R.drawable.layout_border);
 
         return todoRepr;
+    }
+
+    /**
+     * That method search new id for todo
+     * just return most big value and make <code>bigValue++</code>
+     * @param todos - list of todos from json
+     * @return - new id for todo
+     */
+    public static int searchNewId(List<Todo> todos) {
+        if (todos.size() == 0) return 0;
+        ArrayList<Integer> ids = new ArrayList<>();
+
+
+        for (Todo todo : todos) {
+            ids.add(todo.getId());
+        }
+        Collections.sort(ids);
+
+        return ids.get(ids.size()-1) + 1;
     }
 
     /**
@@ -156,22 +183,35 @@ public class WorkWithTodoHelper {
         return layoutParams;
     }
 
-    /**
-     * That method search new id for todo
-     * just return most big value and make <code>bigValue++</code>
-     * @param todos - list of todos from json
-     * @return - new id for todo
-     */
-    public static int searchNewId(List<Todo> todos) {
-        if (todos.size() == 0) return 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+    private static TextView generateTxtTheme(Context context, String theme) {
+        TextView txtTheme = new TextView(context);
+        txtTheme.setId(View.generateViewId());
+        txtTheme.setLayoutParams(layoutParamsForThemeTxt);
+        txtTheme.setId(View.generateViewId());
+        txtTheme.setText(theme);
+        txtTheme.setTextSize(20);
 
-
-        for (Todo todo : todos) {
-            ids.add(todo.getId());
-        }
-        Collections.sort(ids);
-
-        return ids.get(ids.size()-1) + 1;
+        return txtTheme;
     }
+
+    private static TextView generateTxtDescr(Context context, String descr) {
+        TextView txtDescription = new TextView(context);
+        txtDescription.setId(View.generateViewId());
+        txtDescription.setLayoutParams(layoutParamsForDescriptionTxt);
+        txtDescription.setId(View.generateViewId());
+        txtDescription.setText(descr);
+
+        return txtDescription;
+    }
+
+    private static CheckBox generateChkIsDone(Context context, boolean isDone) {
+        CheckBox chkBox = new CheckBox(context);
+        chkBox.setId(View.generateViewId());
+//        chkBox.setEnabled(isDone);
+        chkBox.setLayoutParams(layoutParamsForIsDoneCheckbox);
+
+        return chkBox;
+    }
+
+
 }
