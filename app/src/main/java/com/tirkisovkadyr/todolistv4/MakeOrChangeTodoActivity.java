@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,7 +59,11 @@ public class MakeOrChangeTodoActivity extends AppCompatActivity {
                     break;
                 }
             }
+
         } else {
+            if (todos == null) {
+                todos = new ArrayList<>();
+            }
             int id = WorkWithTodoHelper.searchNewId(Objects.requireNonNull(todos, "Make new Todo Activity searchId with workWithTodoHelper"));
             todos.add(
                     new Todo(

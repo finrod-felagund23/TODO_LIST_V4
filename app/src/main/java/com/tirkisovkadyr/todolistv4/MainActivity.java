@@ -9,8 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 
@@ -28,6 +32,30 @@ public class MainActivity extends AppCompatActivity {
 
         JsonHelper.init();
         WorkWithTodoHelper.init();
+
+//        ScrollView scrollView = findViewById(R.id.main_scroll_view);
+//        Button createTask = findViewById(R.id.create_task_btn);
+//
+////        scrollView.setOnScrollChangeListener((view) -> {
+////
+////        });
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                @Override
+//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//
+//                }
+//            });
+//        }
+//
+//        scrollView.setOnDragListener(new View.OnDragListener() {
+//            @Override
+//            public boolean onDrag(View v, DragEvent event) {
+//
+//                return false;
+//            }
+//        });
 
 //        ArrayList<Todo> todos0 = new ArrayList<Todo>() {
 //            {
@@ -70,8 +98,9 @@ public class MainActivity extends AppCompatActivity {
 //            idOfTopView = todoRepr.getId();
 //            mainLayout.addView(todoRepr);
 //        }
-
-        if (Objects.requireNonNull(todos, "Now you haven't any todo").size() == 0) {
+        try {
+            Objects.requireNonNull(todos, "Now you haven't any todo");
+        } catch(NullPointerException ex) {
             System.out.println("Todo Size == 0");
             ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams
                     (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
@@ -101,26 +130,29 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout todoRepr;
         int counter = 0;
         int idOfTopView = -1;
-
-        for (Todo todo : Objects.requireNonNull(todos, "JsonHelper returned null1")) {
-            System.out.println(todo);
-            if (counter == 0) {
-                counter++;
-                todoRepr = WorkWithTodoHelper.getTodoRepresentation
-                        (
-                                this,
-                                todo
-                        );
-            } else {
-                todoRepr = WorkWithTodoHelper.getTodoRepresentation
-                        (
-                                this,
-                                todo,
-                                idOfTopView
-                        );
+        try {
+            for (Todo todo : Objects.requireNonNull(todos, "JsonHelper returned null1")) {
+                System.out.println(todo);
+                if (counter == 0) {
+                    counter++;
+                    todoRepr = WorkWithTodoHelper.getTodoRepresentation
+                            (
+                                    this,
+                                    todo
+                            );
+                } else {
+                    todoRepr = WorkWithTodoHelper.getTodoRepresentation
+                            (
+                                    this,
+                                    todo,
+                                    idOfTopView
+                            );
+                }
+                idOfTopView = todoRepr.getId();
+                mainLayout.addView(todoRepr);
             }
-            idOfTopView = todoRepr.getId();
-            mainLayout.addView(todoRepr);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
         }
     }
 

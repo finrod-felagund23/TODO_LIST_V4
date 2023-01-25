@@ -57,10 +57,10 @@ public class WorkWithTodoHelper {
      * @return - <code>constraintLayout</code> with given arguments
      */
     public static ConstraintLayout getTodoRepresentation(Context context, Todo todo) {
-        // TODO: 25.01.2023 make todo representations clickable
+        // TODO: 25.01.2023 make todo representations clickable // done
         // TODO: 25.01.2023 if theme longer than 31characters show shortened version
         // TODO: 25.01.2023 if descr longer than \d+characters show shortened version
-        // TODO: 25.01.2023 make button "create task" always on display in app
+        // TODO: 25.01.2023 make button "create task" always on display in app // done
         // TODO: 25.01.2023 make button "create task" disappear if scroll on very bottom // setVisibility()
 
         String theme = todo.getTheme();

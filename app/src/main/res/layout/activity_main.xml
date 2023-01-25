@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_constraint_layout"
+    <ScrollView
+        android:id="@+id/main_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="600dp"
         >
 
-        <Button
-            android:layout_width="240dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_constraint_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="addNewTodoOnClick"
-            android:text="CREATE TASK"
-            android:layout_margin="40dp"
-            android:textSize="22sp"
-            android:elevation="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="UsingOnClickInXml" />
+            android:minHeight="600dp"
+            >
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    
-</ScrollView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/create_task_btn"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:onClick="addNewTodoOnClick"
+        android:text="CREATE TASK"
+        android:layout_margin="30dp"
+        android:textSize="22sp"
+        android:elevation="15dp"
+        android:layout_gravity="bottom|center_horizontal"
+
+        tools:ignore="UsingOnClickInXml" />
+
+</FrameLayout>

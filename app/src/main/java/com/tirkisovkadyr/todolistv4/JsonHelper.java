@@ -8,7 +8,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,6 +41,11 @@ public class JsonHelper {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        try {
+            new File("data/data/com.tirkisovkadyr.todolistv4/files/" + FILE_NAME).createNewFile();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
         try (FileOutputStream fileOutputStream =
                 context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE)) {
@@ -54,6 +61,11 @@ public class JsonHelper {
     }
 
     public static List<Todo> importFromJson(Context context) {
+        try {
+            new File("data/data/com.tirkisovkadyr.todolistv4/files/" + FILE_NAME).createNewFile();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         try (FileInputStream fileInputStream =
                 context.openFileInput(FILE_NAME)) {
 
@@ -63,6 +75,8 @@ public class JsonHelper {
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (MismatchedInputException ex) {
+            ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -71,7 +85,7 @@ public class JsonHelper {
     }
 
     public static String getJustString(List<Todo> dataList) {
-        String jsonString = "";
+        String jsonString;
 
         DataItems dataItems = new DataItems();
         dataItems.setTodos(dataList);
