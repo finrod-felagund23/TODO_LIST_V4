@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class WorkWithTodoHelper {
     private static final ConstraintLayout.LayoutParams layoutParamsForThemeTxt = new ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ConstraintLayout.LayoutParams.MATCH_CONSTRAINT, ConstraintLayout.LayoutParams.WRAP_CONTENT
     );
     private static final ConstraintLayout.LayoutParams layoutParamsForDescriptionTxt = new ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ConstraintLayout.LayoutParams.MATCH_CONSTRAINT, ConstraintLayout.LayoutParams.WRAP_CONTENT
     );
 
 //    private static ConstraintLayout.LayoutParams l = new ConstraintLayout.LayoutParams(width, height)
@@ -33,13 +33,13 @@ public class WorkWithTodoHelper {
         layoutParamsForThemeTxt.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForThemeTxt.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForThemeTxt.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParamsForThemeTxt.setMargins(50, 5, 0, 0);
+        layoutParamsForThemeTxt.setMargins(0, 5, 0, 0);
 
 
         layoutParamsForDescriptionTxt.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForDescriptionTxt.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForDescriptionTxt.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParamsForDescriptionTxt.setMargins(50, 0, 0, 5);
+        layoutParamsForDescriptionTxt.setMargins(0, 0, 0, 5);
     }
 
     /**
@@ -73,6 +73,8 @@ public class WorkWithTodoHelper {
         todoRepr.addView(txtDescription);
 
         todoRepr.setBackgroundResource(R.drawable.layout_border);
+
+        // TODO add checkbox isDone for every todo representation
 
         return todoRepr;
     }

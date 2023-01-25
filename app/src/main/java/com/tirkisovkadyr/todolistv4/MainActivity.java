@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Todo> todos0 = new ArrayList<Todo>() {
             {
-                add(new Todo(0, "Do something", "Someday"));
-                add(new Todo(1, "Do nothing", "Everyday"));
-                add(new Todo(2, "Take medicine", "Use 2 pills of anti-drag medicine"));
+                add(new Todo(0, "Do something", "Someday", false));
+                add(new Todo(1, "Do nothing", "Everyday", false));
+                add(new Todo(2, "Take medicine", "Use 2 pills of anti-drag medicine", false));
             }
         };
 //        JsonHelper.exportToJson(this, todos0);
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mainLayout.setBackgroundResource(R.drawable.layout_border);
         List<Todo> todos = JsonHelper.importFromJson(this);
         System.out.println(todos);
-        ConstraintLayout todoRepr = null;
+        ConstraintLayout todoRepr;
         int counter = 0;
         int idOfTopView = -1;
 

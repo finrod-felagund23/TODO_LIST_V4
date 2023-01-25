@@ -31,7 +31,7 @@ public class MakeNewTodoActivity extends AppCompatActivity {
 
         int id = WorkWithTodoHelper.searchNewId(Objects.requireNonNull(todos, "Make new Todo Activity get id with workWithTodoHelper"));
 
-        todos.add(new Todo(id, theme.getText().toString(), descr.getText().toString()));
+        todos.add(new Todo(id, theme.getText().toString(), descr.getText().toString(), false));
 
         JsonHelper.exportToJson(this, todos);
 
