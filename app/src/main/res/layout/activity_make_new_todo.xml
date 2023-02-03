@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MakeOrChangeTodoActivity"
-    android:id="@+id/main_layout">
+    android:id="@+id/main_layout"
+    android:layout_marginTop="90dp">
 
 
     <EditText
@@ -16,7 +17,7 @@
         android:hint="Enter theme..."
         android:textSize="27sp"
         android:gravity="start|top"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="90dp"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

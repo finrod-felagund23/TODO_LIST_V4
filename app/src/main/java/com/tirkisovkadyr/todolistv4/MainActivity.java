@@ -9,13 +9,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.DragEvent;
+
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ThemedSpinnerAdapter;
 
 
 import java.util.ArrayList;
@@ -27,9 +33,17 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Bundle arguments = getIntent().getExtras();
+
+        if (arguments != null) {
+            if ("night".equals(arguments.get("theme"))) {
+                setTheme(R.style.Theme_TODOLISTV4_night1);
+            } else if ("light".equals(arguments.get("theme"))) {
+                setTheme(R.style.Theme_TODOLISTV4_light);
+            }
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         JsonHelper.init();
         WorkWithTodoHelper.init();
 
@@ -57,18 +71,18 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        ArrayList<Todo> todos0 = new ArrayList<Todo>() {
-//            {
-//                add(new Todo(0, "Do something", "Someday", false));
-//                add(new Todo(1, "Do nothing", "Everyday", false));
-//                add(new Todo(2, "Take medicine", "Use 2 pills of anti-drag medicine", false));
+        ArrayList<Todo> todos0 = new ArrayList<Todo>() {
+            {
+                add(new Todo(0, "Do something", "Someday", false));
+                add(new Todo(1, "Do nothing", "Everyday", false));
+                add(new Todo(2, "Take medicine", "Use 2 pills of anti-drag medicine", false));
 //                add(new Todo(3, "Go to Gym", "Go To Gum and make some workout!", true));
 //                add(new Todo(4, "Make impact in todo list project", "Begin making styles and themes for done design", false));
 //                add(new Todo(5, "Write tests for my android app", "First of all learn how write tests for android apps", false));
-//            }
-//        };
-//
-//        JsonHelper.exportToJson(this, todos0);
+            }
+        };
+
+        JsonHelper.exportToJson(this, todos0);
 
         ConstraintLayout mainLayout = findViewById(R.id.main_constraint_layout);
 //        mainLayout.setBackgroundResource(R.drawable.layout_border);
@@ -119,6 +133,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+        //https://stackoverflow.com/questions/3438276/how-to-change-the-text-on-the-action-bar
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_main);
@@ -163,5 +184,39 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MakeOrChangeTodoActivity.class);
         intent.putExtra("id", -1);
         startActivity(intent);
+    }
+
+    public void changeTheme(View view) {
+        Resources.Theme mTheme = getTheme();
+        System.out.println(mTheme.toString());
+
+        String theme;
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        System.out.println(returnThemeName());
+        if (returnThemeName().equals("Theme.TODOLISTV4_night1")) {
+            theme = "light";
+        } else {
+            theme = "night";
+        }
+        intent.putExtra("theme", theme);
+//        setTheme(R.style.Theme_TODOLISTV4_night1);
+        startActivity(intent);
+    }
+
+    public String returnThemeName()
+    {
+        PackageInfo packageInfo;
+        try
+        {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
+            int themeResId = packageInfo.applicationInfo.theme;
+            return getResources().getResourceEntryName(themeResId);
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

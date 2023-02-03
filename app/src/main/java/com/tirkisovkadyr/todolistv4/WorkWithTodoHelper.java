@@ -38,7 +38,7 @@ public class WorkWithTodoHelper {
         layoutParamsForThemeTxt.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForThemeTxt.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForThemeTxt.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParamsForThemeTxt.setMargins(0, 5, 0, 0);
+        layoutParamsForThemeTxt.setMargins(0, 50, 0, 0);
 
         layoutParamsForDescriptionTxt.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForDescriptionTxt.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
@@ -47,7 +47,7 @@ public class WorkWithTodoHelper {
 
         layoutParamsForIsDoneCheckbox.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParamsForIsDoneCheckbox.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParamsForIsDoneCheckbox.setMargins(20, 20, 20,0);
+        layoutParamsForIsDoneCheckbox.setMargins(20, 50, 20,0);
     }
 
     /**
@@ -178,7 +178,7 @@ public class WorkWithTodoHelper {
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
 
-        layoutParams.setMargins(15, 30, 15, 0);
+        layoutParams.setMargins(15, 100, 15, 0);
 
         return layoutParams;
     }
