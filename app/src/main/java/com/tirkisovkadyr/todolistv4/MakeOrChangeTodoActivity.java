@@ -1,5 +1,6 @@
 package com.tirkisovkadyr.todolistv4;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -20,6 +21,27 @@ public class MakeOrChangeTodoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if ("night".equals(Crutch.getTheme())) {
+            setTheme(R.style.Theme_TODOLISTV4_night1);
+        } else if ("light".equals(Crutch.getTheme())) {
+            setTheme(R.style.Theme_TODOLISTV4_light);
+        }
+
+        TextView txt1 = new TextView(this);
+        txt1.setText("My Test View!");
+        txt1.setTextSize(27);
+
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setCustomView(txt1);
+//        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.title_bar_gray)));
+        actionBar.setTitle("My Title");
+        actionBar.show();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_new_todo);
 

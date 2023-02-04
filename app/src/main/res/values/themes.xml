@@ -13,8 +13,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-<!--        <item name="windowActionBar">true</item>-->
-<!--        <item name="windowNoTitle">false</item>-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- holo.noactionbar.Fullscreen  -->
 <!--        <item name="android:windowFullscreen">true</item>-->
 <!--        <item name="android:windowContentOverlay">@null</item>-->
@@ -35,8 +35,8 @@
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <!-- Hide action bar and hide title -->
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
 <!--        https://stackoverflow.com/questions/3438276/how-to-change-the-text-on-the-action-bar-->
         <!-- holo.noactionbar.Fullscreen  -->
         <item name="android:windowFullscreen">true</item>

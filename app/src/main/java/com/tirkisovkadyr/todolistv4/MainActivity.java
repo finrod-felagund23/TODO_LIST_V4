@@ -3,45 +3,46 @@ package com.tirkisovkadyr.todolistv4;
 // javac -classpath libs\*; ch01\sec01\HelloWorld.java && java -classpath libs\*; ch01.sec01.HelloWorld
 
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.DragEvent;
-
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ThemedSpinnerAdapter;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
+
 public class MainActivity extends AppCompatActivity {
+    private Toolbar toolbar;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Bundle arguments = getIntent().getExtras();
 
-        if (arguments != null) {
-            if ("night".equals(arguments.get("theme"))) {
-                setTheme(R.style.Theme_TODOLISTV4_night1);
-            } else if ("light".equals(arguments.get("theme"))) {
-                setTheme(R.style.Theme_TODOLISTV4_light);
-            }
+
+
+        toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("My Tittle 11");
+        toolbar.setSubtitle("My Subtitle");
+        toolbar.inflateMenu(R.menu.main_menu);
+
+
+        if ("night".equals(Crutch.getTheme())) {
+            setTheme(R.style.Theme_TODOLISTV4_night1);
+        } else if ("light".equals(Crutch.getTheme())) {
+            setTheme(R.style.Theme_TODOLISTV4_light);
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         JsonHelper.init();
@@ -112,6 +113,23 @@ public class MainActivity extends AppCompatActivity {
 //            idOfTopView = todoRepr.getId();
 //            mainLayout.addView(todoRepr);
 //        }
+
+//        TextView txt1 = new TextView(this);
+//        txt1.setText("My Test View!");
+//        txt1.setTextSize(27);
+//
+//        ActionBar actionBar = getSupportActionBar();
+//        assert actionBar != null;
+//        actionBar.setHomeButtonEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayShowHomeEnabled(true);
+//        actionBar.setCustomView(txt1);
+////        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.title_bar_gray)));
+//        actionBar.setTitle("My Title");
+//        actionBar.show();
+
+
+
         try {
             Objects.requireNonNull(todos, "Now you haven't any todo");
         } catch(NullPointerException ex) {
@@ -187,36 +205,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeTheme(View view) {
-        Resources.Theme mTheme = getTheme();
-        System.out.println(mTheme.toString());
-
-        String theme;
         finish();
         Intent intent = new Intent(this, MainActivity.class);
-        System.out.println(returnThemeName());
-        if (returnThemeName().equals("Theme.TODOLISTV4_night1")) {
-            theme = "light";
+        if ("night".equals(Crutch.getTheme())) {
+            Crutch.setTheme("light");
         } else {
-            theme = "night";
+            Crutch.setTheme("night");
         }
-        intent.putExtra("theme", theme);
+//        intent.putExtra("theme", theme);
 //        setTheme(R.style.Theme_TODOLISTV4_night1);
         startActivity(intent);
-    }
-
-    public String returnThemeName()
-    {
-        PackageInfo packageInfo;
-        try
-        {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
-            int themeResId = packageInfo.applicationInfo.theme;
-            return getResources().getResourceEntryName(themeResId);
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
