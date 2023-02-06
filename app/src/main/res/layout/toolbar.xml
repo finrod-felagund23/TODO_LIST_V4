@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_actionbar_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/my_toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
-    android:elevation="4dp"
-    android:layout_gravity="center"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-</androidx.appcompat.widget.Toolbar>
-</FrameLayout>
+    android:minHeight="?attr/actionBarSize"
+    android:theme="?attr/actionBarTheme"
+    android:layout_gravity="top"
+ >
+</android.widget.Toolbar>

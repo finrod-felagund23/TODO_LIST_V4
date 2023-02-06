@@ -9,7 +9,10 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,17 +27,25 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
 
 
-        toolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = new Toolbar(this);
+        toolbar.setLayoutParams(new FrameLayout.LayoutParams
+                (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        );
+        toolbar.setBackgroundColor(R.color.toolbar1);
+        System.out.println("toolbar is not null");
         toolbar.setTitle("My Tittle 11");
         toolbar.setSubtitle("My Subtitle");
         toolbar.inflateMenu(R.menu.main_menu);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar(), "support action bar").show();
 
 
         if ("night".equals(Crutch.getTheme())) {
@@ -43,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
             setTheme(R.style.Theme_TODOLISTV4_light);
         }
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         JsonHelper.init();
         WorkWithTodoHelper.init();
 

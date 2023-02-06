@@ -46,8 +46,8 @@ dependencies {
 //    })
 //    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
-    //noinspection GradleCompatible
-//    implementation "com.android.support:appcompat-v7:25.0.0"
+
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     //noinspection GradleCompatible
 //    implementation "com.android.support:recyclerview-v7:25.0.0"
     //noinspection GradleCompatible

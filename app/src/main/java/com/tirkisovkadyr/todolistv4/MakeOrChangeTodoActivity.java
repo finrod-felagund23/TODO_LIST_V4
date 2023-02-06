@@ -28,22 +28,24 @@ public class MakeOrChangeTodoActivity extends AppCompatActivity {
             setTheme(R.style.Theme_TODOLISTV4_light);
         }
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_make_new_todo);
+
         TextView txt1 = new TextView(this);
         txt1.setText("My Test View!");
         txt1.setTextSize(27);
 
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setCustomView(txt1);
+        System.out.printf("action bar is %s\n", actionBar);
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setCustomView(txt1);
 //        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.title_bar_gray)));
-        actionBar.setTitle("My Title");
-        actionBar.show();
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make_new_todo);
+            actionBar.setTitle("My Title 2");
+            actionBar.show();
+        }
 
         WorkWithTodoHelper.init();
         JsonHelper.init();
